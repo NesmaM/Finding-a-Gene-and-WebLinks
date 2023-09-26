@@ -1,7 +1,5 @@
 
 /**
- * Write a description of Part1 here.
- * 
  * @author (Nesma Abouzaid) 
  * @version (6/20/2023)
  */
