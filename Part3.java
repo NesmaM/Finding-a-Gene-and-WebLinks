@@ -4,68 +4,39 @@
  * @version (6/20/2023)
  */
 public class Part3 {
-        public int findStopCodon(String dna, int startIndex, String stopCodon) {
-		int currIndex = dna.indexOf(stopCodon, startIndex + 3);
-		while(currIndex != -1) {
-			int diff = currIndex - startIndex;
-			if(diff % 3 == 0) {
-				return currIndex;
-			} else {
-				currIndex = dna.indexOf(stopCodon, currIndex + 1);
-			}
-		}
-
-		return -1;
-	}
-
-	public String findGene(String dna, int where) {
-		int startIndex = dna.indexOf("ATG", where);
-		if(startIndex == -1 || where == -1) {
-			return "";
-		}
-
-		int taaIndex = findStopCodon(dna, startIndex, "TAA");
-		int tagIndex = findStopCodon(dna, startIndex, "TAG");
-		int tgaIndex = findStopCodon(dna, startIndex, "TGA");
-
-		int minIndex = 0;
-
-		if(taaIndex == -1 || (tgaIndex != -1 && tgaIndex < taaIndex)) {
-			minIndex = tgaIndex;
-		} else {
-			minIndex = taaIndex;
-		}
-
-		if(minIndex == -1 || (tagIndex != -1 && tagIndex < minIndex)) {
-			minIndex = tagIndex;
-		}
-
-		if(minIndex == -1) {
-			return "";
-		}
-
-		return dna.substring(startIndex, minIndex + 3);
-	}
-	
-	public int countGenes (String dna){
-	    int noOfGenes = 0;
-	    int startIndex = 0;
-	    while(true){
-	        String wholeGene = findGene(dna, startIndex);
-	        if(wholeGene.isEmpty()){
-	            break;
-	           }
-	           System.out.println("Gene found: " + wholeGene);
-	           startIndex = dna.indexOf(wholeGene, startIndex)+wholeGene.length();
-	       }   
-	    return noOfGenes;
-	   }
-	   
-    public void testLast(){
-        String dna = "ATGATCTAATTTATGaaaaaaaaaTGAAGA";
-        System.out.println("Testing printGenes here " + dna);
-        countGenes(dna);
+    public boolean twoOccurrences (String stringa, String stringb){
+        int index1 = stringb.indexOf(stringa);
+        if(index1 !=-1){
+            int index2 = stringb.indexOf(stringa, index1+1);
+            if(index2 !=-1){
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;        
     }
-
-
+    
+    public String lastPart (String stringa, String stringb){
+        String result = "";
+        int indexOcc = stringb.indexOf(stringa);
+        if(indexOcc != -1){
+           result = stringb.substring(indexOcc+stringa.length(), stringb.length()); 
+        }else{
+             result = stringb;
+        }
+        return result;
+    }
+    
+    public void testing(){
+  
+        System.out.println(twoOccurrences("a","banana"));
+        System.out.println(twoOccurrences("by","A story by Abby Long"));
+        System.out.println(twoOccurrences("atg","ctgtatgta"));
+        
+        System.out.println(lastPart("an", "banana"));
+        System.out.println(lastPart("zoo", "forest"));
+        System.out.println(lastPart("zoo", "farzookeeper"));
+    }
+    
 }
